@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import ConnectSection from "./components/ConnectSection";
 
 // ─────────────────────────────────────────────────────────────
 // DATA
@@ -102,11 +103,11 @@ function Navbar({ reset }) {
             <div className="text-xs text-zinc-500"></div>
           </div>
         </button>
-        <nav className="hidden md:flex items-center gap-8 text-sm text-zinc-500">
-          <button className="hover:text-white transition">Browse</button>
-          <button className="hover:text-white transition">Upload</button>
-          <button className="hover:text-white transition">About</button>
-        </nav>
+       <nav className="hidden md:flex items-center gap-8 text-sm text-zinc-500">
+  <button onClick={reset} className="hover:text-white transition">Browse</button>
+  <button onClick={() => document.getElementById("contribute")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition">Upload</button>
+  <button onClick={() => document.getElementById("connect")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition">About</button>
+</nav>
       </div>
     </header>
   );
@@ -526,7 +527,9 @@ export default function App() {
         {showBranchSelect && <BranchSelect courseId={selectedCourse} onSelect={setSelectedBranch} />}
         {showSemSelect    && <SemesterSelect selected={selectedSem} onSelect={setSelectedSem} available={availableSems} />}
         {showResults      && <Results papers={filteredPapers} />}
-        {isSearching      && <Results papers={filteredPapers} />}
+       {isSearching      && <Results papers={filteredPapers} />}
+
+        <ConnectSection />
 
       </main>
 
