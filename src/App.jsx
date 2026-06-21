@@ -74,13 +74,6 @@ function getBranch(courseId, branchId) {
 // ICONS
 // ─────────────────────────────────────────────────────────────
 
-const SearchIcon = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-    <circle cx="11" cy="11" r="7" />
-    <path strokeLinecap="round" d="M20 20l-3-3" />
-  </svg>
-);
-
 const FileIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
@@ -185,31 +178,7 @@ function Breadcrumb({ courseId, branchId, sem, onGoHome, onGoCourse, onGoBranch 
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// SEARCH BAR
-// ─────────────────────────────────────────────────────────────
 
-function SearchBar({ query, setQuery }) {
-  return (
-    <div className="relative max-w-2xl mx-auto">
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none">
-        <SearchIcon />
-      </div>
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search subject, course, branch..."
-        className="w-full rounded-2xl border border-zinc-800 bg-zinc-900/70 pl-12 pr-10 py-4 text-sm outline-none transition-all focus:border-zinc-600 focus:ring-4 focus:ring-zinc-800/50"
-      />
-      {query && (
-        <button onClick={() => setQuery("")}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition text-lg">
-          ×
-        </button>
-      )}
-    </div>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────
 // COURSE GRID
@@ -417,12 +386,9 @@ function Results({ papers }) {
 // ─────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [query, setQuery] = useState("");
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedBranch, setSelectedBranch] = useState(null);
   const [selectedSem, setSelectedSem] = useState(null);
-
-  const isSearching = query.trim().length > 0;
 
   // ── Navigation handlers ──────────────────────────────────
 
@@ -430,7 +396,6 @@ export default function App() {
     setSelectedCourse(null);
     setSelectedBranch(null);
     setSelectedSem(null);
-    setQuery("");
   }
 
   function handleCourseSelect(id) {
@@ -470,25 +435,17 @@ export default function App() {
   }, [selectedBranch]);
 
   const filteredPapers = useMemo(() => {
-    if (isSearching) {
-      const q = query.toLowerCase();
-      return PAPERS.filter(
-        (p) =>
-          p.subject.toLowerCase().includes(q) ||
-          COURSES.find((c) => c.branches.some((b) => b.id === p.branch))?.label.toLowerCase().includes(q)
-      );
-    }
     if (!selectedBranch || !selectedSem) return [];
     return PAPERS.filter((p) => p.branch === selectedBranch && p.sem === selectedSem);
-  }, [selectedBranch, selectedSem, query, isSearching]);
+  }, [selectedBranch, selectedSem]);
 
   // ── View flags ───────────────────────────────────────────
 
-  const showCourseGrid   = !isSearching && !selectedCourse;
-  const showBranchSelect = !isSearching && selectedCourse && !selectedBranch;
-  const showSemSelect    = !isSearching && selectedBranch && !selectedSem;
-  const showResults      = !isSearching && selectedBranch && selectedSem;
-  const showBreadcrumb   = !isSearching && selectedCourse;
+  const showCourseGrid   = !selectedCourse;
+  const showBranchSelect = selectedCourse && !selectedBranch;
+  const showSemSelect    = selectedBranch && !selectedSem;
+  const showResults      = selectedBranch && selectedSem;
+  const showBreadcrumb   = !!selectedCourse;
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -500,17 +457,14 @@ export default function App() {
         <div className="text-center space-y-3">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
             PaperStack
-            <span className="block text-zinc-500">Search Download Prepare</span>
+            <span className="block text-zinc-500">Download · Prepare</span>
           </h1>
           <p className="text-zinc-400 text-sm">
-            Select your course and semester — or search directly.
+            Select your course and semester to find previous year papers.
           </p>
         </div>
 
-        {/* Search */}
-        <SearchBar query={query} setQuery={setQuery} />
-
-        {/* Breadcrumb — only when navigating, not searching */}
+        {/* Breadcrumb — only when navigating */}
         {showBreadcrumb && (
           <Breadcrumb
             courseId={selectedCourse}
@@ -527,7 +481,6 @@ export default function App() {
         {showBranchSelect && <BranchSelect courseId={selectedCourse} onSelect={setSelectedBranch} />}
         {showSemSelect    && <SemesterSelect selected={selectedSem} onSelect={setSelectedSem} available={availableSems} />}
         {showResults      && <Results papers={filteredPapers} />}
-       {isSearching      && <Results papers={filteredPapers} />}
 
         <ConnectSection />
 
