@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ConnectSection from "./components/ConnectSection";
 
@@ -114,38 +114,39 @@ function getBranchByBranchId(branchId) {
 
 const CourseIcons = {
   btech: (
-    <svg className="w-6 h-6 text-indigo-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <svg className="w-6 h-6 text-indigo-500 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
     </svg>
   ),
   bca: (
-    <svg className="w-6 h-6 text-purple-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <svg className="w-6 h-6 text-purple-500 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
     </svg>
   ),
   bba: (
-    <svg className="w-6 h-6 text-emerald-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <svg className="w-6 h-6 text-emerald-500 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v5.75c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 013 18.875v-5.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v10.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v14.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
     </svg>
   ),
   bcom: (
-    <svg className="w-6 h-6 text-pink-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.251.11a3.375 3.375 0 003.456-.788.892.892 0 011.237 0 .89.89 0 010 1.254 5.117 5.117 0 01-4.287 1.446M12 21.004V22" />
+    <svg className="w-6 h-6 text-pink-500 dark:text-pink-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   ),
   mca: (
-    <svg className="w-6 h-6 text-cyan-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3V7.5a3 3 0 013-3h13.5a3 3 0 013 3v3.75a3 3 0 01-3 3" />
+    <svg className="w-6 h-6 text-cyan-500 dark:text-cyan-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
     </svg>
   ),
   mba: (
-    <svg className="w-6 h-6 text-amber-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666" />
+    <svg className="w-6 h-6 text-amber-550 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     </svg>
   ),
   mtech: (
-    <svg className="w-6 h-6 text-sky-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925-3.546" />
+    <svg className="w-6 h-6 text-sky-500 dark:text-sky-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 9h6v6H9V9zM9 1v3m6-3v3M9 20v3m6-3v3M1 9h3m-3 6h3m16-6h3m-3 6h3" />
     </svg>
   )
 };
@@ -161,37 +162,64 @@ const FileIcon = () => (
 // NAVBAR
 // ─────────────────────────────────────────────────────────────
 
-function Navbar({ reset }) {
+function Navbar({ reset, theme, setTheme }) {
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-zinc-900 bg-zinc-950/70">
+    <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-900 bg-white/70 dark:bg-zinc-950/70 transition-colors duration-300">
       <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between">
         <button onClick={reset} className="flex items-center gap-3 hover:opacity-90 transition cursor-pointer">
-          <img src="/logo.png" alt="PaperStack" className="w-8 h-8 rounded-lg object-cover ring-1 ring-zinc-800" />
+          <img src="/logo.png" alt="PaperStack" className="w-8 h-8 rounded-lg object-cover ring-1 ring-zinc-200 dark:ring-zinc-800" />
           <div className="text-left">
-            <div className="text-sm font-semibold tracking-tight text-white flex items-center gap-1.5">
+            <div className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-white flex items-center gap-1.5">
               PaperStack 
-              <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400 font-normal">GEU</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-650 dark:text-zinc-400 font-normal">GEU</span>
             </div>
           </div>
         </button>
         
-        <div className="flex items-center gap-5">
-          <nav className="hidden md:flex items-center gap-6 text-xs text-zinc-400">
-            <button onClick={reset} className="hover:text-white transition cursor-pointer">Browse</button>
-            <button onClick={() => document.getElementById("contribute")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition cursor-pointer">Upload</button>
-            <button onClick={() => document.getElementById("connect")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-white transition cursor-pointer">About</button>
+        <div className="flex items-center gap-4">
+          <nav className="hidden md:flex items-center gap-6 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
+            <button onClick={reset} className="hover:text-zinc-900 dark:hover:text-white transition cursor-pointer">Browse</button>
+            <button onClick={() => document.getElementById("contribute")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-zinc-900 dark:hover:text-white transition cursor-pointer">Upload</button>
+            <button onClick={() => document.getElementById("connect")?.scrollIntoView({ behavior: "smooth" })} className="hover:text-zinc-900 dark:hover:text-white transition cursor-pointer">About</button>
           </nav>
+          
+          {/* Theme Toggle Button */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="flex items-center justify-center w-8 h-8 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 hover:dark:text-white transition cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              // Sun Icon
+              <svg className="w-4 h-4 animate-float" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            ) : (
+              // Moon Icon
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
           
           <a 
             href="https://github.com/sanskar18-commits/PaperStack"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-xs font-medium text-zinc-300 hover:text-white transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 dark:bg-white border border-zinc-950 dark:border-white hover:bg-zinc-800 dark:hover:bg-zinc-100 text-xs font-semibold text-white dark:text-black transition"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
             </svg>
-            <span>Star Repo</span>
+            <span>Star</span>
           </a>
         </div>
       </div>
@@ -238,7 +266,7 @@ function Breadcrumb({ courseId, branchId, sem, onGoHome, onGoCourse, onGoBranch 
     <div className="flex items-center gap-3 flex-wrap">
       <button
         onClick={handleBack}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 transition text-xs font-medium text-zinc-300 cursor-pointer"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-350 dark:hover:border-zinc-700 hover:bg-zinc-200 hover:dark:bg-zinc-900 transition text-xs font-semibold text-zinc-700 dark:text-zinc-300 cursor-pointer"
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 18l-6-6 6-6" />
@@ -246,17 +274,17 @@ function Breadcrumb({ courseId, branchId, sem, onGoHome, onGoCourse, onGoBranch 
         Back
       </button>
 
-      <div className="flex items-center gap-1.5 text-xs font-mono text-zinc-500">
-        <button onClick={onGoHome} className="hover:text-zinc-300 transition cursor-pointer">home</button>
+      <div className="flex items-center gap-1.5 text-xs font-mono text-zinc-400 dark:text-zinc-500">
+        <button onClick={onGoHome} className="hover:text-zinc-700 dark:hover:text-zinc-300 transition cursor-pointer">home</button>
         {steps.map((step, i) => (
           <span key={i} className="flex items-center gap-1.5">
-            <span className="text-zinc-800">/</span>
+            <span className="text-zinc-300 dark:text-zinc-800">/</span>
             {step.onClick && !step.active ? (
-              <button onClick={step.onClick} className="hover:text-zinc-300 transition text-zinc-400 cursor-pointer">
+              <button onClick={step.onClick} className="hover:text-zinc-700 dark:hover:text-zinc-300 transition text-zinc-500 dark:text-zinc-400 cursor-pointer">
                 {step.label.toLowerCase()}
               </button>
             ) : (
-              <span className={step.active && i === steps.length - 1 ? "text-zinc-200" : "text-zinc-400"}>
+              <span className={step.active && i === steps.length - 1 ? "text-zinc-900 dark:text-zinc-200" : "text-zinc-500 dark:text-zinc-400"}>
                 {step.label.toLowerCase()}
               </span>
             )}
@@ -284,16 +312,16 @@ function CourseGrid({ onSelect }) {
       >
         <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 blur-2xl rounded-full" />
         <div className="flex items-start justify-between">
-          <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-zinc-900 border border-zinc-800">
+          <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
             {icon}
           </div>
-          <span className="text-xs font-mono text-zinc-500 group-hover:text-zinc-300 transition-colors">
+          <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-800 dark:group-hover:text-zinc-200 transition-colors">
             {course.branches.length > 1 ? `${course.branches.length} branches` : "General"}
           </span>
         </div>
         <div>
-          <div className="text-lg font-bold text-white tracking-tight">{course.label}</div>
-          <div className="text-xs text-zinc-400 mt-0.5 flex items-center gap-1">
+          <div className="text-lg font-bold text-zinc-900 dark:text-white tracking-tight">{course.label}</div>
+          <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 flex items-center gap-1">
             Explore Papers
             <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
           </div>
@@ -305,9 +333,9 @@ function CourseGrid({ onSelect }) {
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-zinc-900 pb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-          <h2 className="text-xs font-mono tracking-widest text-zinc-400 uppercase">Undergraduate Programs</h2>
+        <div className="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-900 pb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+          <h2 className="text-xs font-mono tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">Undergraduate Programs</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {ug.map((c) => <CourseCard key={c.id} course={c} />)}
@@ -316,9 +344,9 @@ function CourseGrid({ onSelect }) {
       
       {pg.length > 0 && (
         <div className="space-y-4 pt-4">
-          <div className="flex items-center gap-2 border-b border-zinc-900 pb-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-            <h2 className="text-xs font-mono tracking-widest text-zinc-400 uppercase">Postgraduate Programs</h2>
+          <div className="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-900 pb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+            <h2 className="text-xs font-mono tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">Postgraduate Programs</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {pg.map((c) => <CourseCard key={c.id} course={c} />)}
@@ -340,8 +368,8 @@ function BranchSelect({ courseId, onSelect }) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight text-white">Select Branch</h2>
-        <p className="text-zinc-400 text-sm mt-1">Under program: <span className="text-indigo-400 font-semibold">{course.label}</span></p>
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Select Branch</h2>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1">Under program: <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{course.label}</span></p>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -349,13 +377,13 @@ function BranchSelect({ courseId, onSelect }) {
           <button 
             key={branch.id} 
             onClick={() => onSelect(branch.id)}
-            className="group glass-card rounded-2xl p-5 text-left hover:bg-zinc-900/50 cursor-pointer flex items-center justify-between"
+            className="group glass-card rounded-2xl p-5 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900/50 cursor-pointer flex items-center justify-between"
           >
             <div>
-              <div className="text-base font-semibold text-white group-hover:text-indigo-300 transition-colors">{branch.label}</div>
-              <div className="text-xs text-zinc-500 mt-1 font-mono">{branch.id.toUpperCase()}</div>
+              <div className="text-base font-semibold text-zinc-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">{branch.label}</div>
+              <div className="text-xs text-zinc-400 dark:text-zinc-500 mt-1 font-mono">{branch.id.toUpperCase()}</div>
             </div>
-            <div className="w-8 h-8 rounded-xl bg-zinc-950/60 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white transition-colors">
+            <div className="w-8 h-8 rounded-xl bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 group-hover:dark:text-white transition-colors">
               →
             </div>
           </button>
@@ -373,8 +401,8 @@ function SemesterSelect({ selected, onSelect, available }) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight text-white">Select Semester</h2>
-        <p className="text-zinc-400 text-sm mt-1">Available academic terms showing active state</p>
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Select Semester</h2>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1">Available academic terms showing active state</p>
       </div>
       
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-3">
@@ -387,10 +415,10 @@ function SemesterSelect({ selected, onSelect, available }) {
               onClick={() => active && onSelect(s)}
               className={`h-16 rounded-2xl font-bold transition-all border flex flex-col items-center justify-center gap-1 cursor-pointer
                 ${selected === s 
-                  ? "bg-white text-black border-white shadow-xl shadow-white/5"
+                  ? "bg-zinc-900 text-white dark:bg-white dark:text-black border-zinc-900 dark:border-white shadow-xl shadow-zinc-900/10 dark:shadow-white/5"
                   : active 
-                    ? "bg-zinc-900/60 border-zinc-800 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-900 hover:-translate-y-0.5 duration-150"
-                    : "opacity-20 cursor-not-allowed bg-zinc-950/20 border-zinc-900/50 text-zinc-600"}`}
+                    ? "bg-zinc-100 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-200 hover:dark:bg-zinc-900 hover:-translate-y-0.5 duration-150"
+                    : "opacity-20 cursor-not-allowed bg-zinc-50 dark:bg-zinc-950/20 border-zinc-200 dark:border-zinc-900/50 text-zinc-400 dark:text-zinc-650"}`}
             >
               <span className="text-base">S{s}</span>
               <span className="text-[9px] font-mono font-normal">Semester</span>
@@ -408,33 +436,33 @@ function SemesterSelect({ selected, onSelect, available }) {
 
 function PaperCard({ paper, onAction }) {
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-zinc-900 bg-zinc-950/50 p-4 hover:border-zinc-800 hover:bg-zinc-900/10 transition-all duration-200">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-zinc-200 dark:border-zinc-900 bg-white/50 dark:bg-zinc-950/50 p-4 hover:border-zinc-300 dark:hover:border-zinc-800 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/10 transition-all duration-200">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-850 flex items-center justify-center text-zinc-400">
+        <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
           <FileIcon />
         </div>
         <div>
-          <div className="font-semibold text-white flex items-center gap-2">
+          <div className="font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
             <span>{paper.year} Exam Paper</span>
             <span className={`text-[10px] px-1.5 py-0.5 rounded-full border ${
               paper.exam === "End Sem" 
-                ? "bg-indigo-500/5 border-indigo-500/20 text-indigo-400"
-                : "bg-purple-500/5 border-purple-500/20 text-purple-400"
+                ? "bg-indigo-500/5 border-indigo-500/20 text-indigo-600 dark:text-indigo-400"
+                : "bg-purple-500/5 border-purple-500/20 text-purple-600 dark:text-purple-400"
             }`}>{paper.exam}</span>
           </div>
-          <div className="text-xs text-zinc-500 font-mono mt-0.5">SUBJECT: {paper.subject}</div>
+          <div className="text-xs text-zinc-500 dark:text-zinc-500 font-mono mt-0.5">SUBJECT: {paper.subject}</div>
         </div>
       </div>
       <div className="flex gap-2 w-full sm:w-auto">
         <button 
           onClick={() => onAction("Viewing", paper)}
-          className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-xs font-semibold text-zinc-300 hover:text-white border border-zinc-800 transition cursor-pointer"
+          className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 transition cursor-pointer"
         >
           View PDF
         </button>
         <button 
           onClick={() => onAction("Downloading", paper)}
-          className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-xs font-bold text-black transition cursor-pointer"
+          className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-xs font-bold text-white dark:text-black transition cursor-pointer"
         >
           Download
         </button>
@@ -454,20 +482,20 @@ function SubjectAccordion({ subject, papers, onAction }) {
   const midSem = papers.filter((p) => p.exam === "Mid Sem").sort((a, b) => b.year - a.year);
 
   return (
-    <div className="rounded-3xl overflow-hidden border border-zinc-900 bg-zinc-900/10 backdrop-blur-xl">
+    <div className="rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-900 bg-white/20 dark:bg-zinc-900/10 backdrop-blur-xl">
       <button 
         onClick={() => setOpen(!open)}
-        className="w-full px-6 py-5 flex items-center justify-between hover:bg-zinc-900/30 transition cursor-pointer"
+        className="w-full px-6 py-5 flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition cursor-pointer"
       >
         <div className="text-left">
-          <div className="text-lg font-bold text-white tracking-tight">{subject}</div>
-          <div className="text-xs text-zinc-500 mt-1 flex items-center gap-2">
+          <div className="text-lg font-bold text-zinc-900 dark:text-white tracking-tight">{subject}</div>
+          <div className="text-xs text-zinc-500 dark:text-zinc-550 mt-1 flex items-center gap-2">
             <span>{papers.length} paper{papers.length > 1 ? "s" : ""} available</span>
             <span>·</span>
-            <span className="text-indigo-400 font-mono">ACTIVE</span>
+            <span className="text-indigo-600 dark:text-indigo-400 font-mono">ACTIVE</span>
           </div>
         </div>
-        <div className={`w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 transition-transform duration-300 ${open ? "rotate-180" : ""}`}>
+        <div className={`w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-205 dark:border-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 transition-transform duration-300 ${open ? "rotate-180" : ""}`}>
           ↓
         </div>
       </button>
@@ -478,7 +506,7 @@ function SubjectAccordion({ subject, papers, onAction }) {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-1 h-1 rounded-full bg-indigo-500" />
-                <p className="text-xs font-mono tracking-wider text-zinc-500 uppercase">End Sem Papers</p>
+                <p className="text-xs font-mono tracking-wider text-zinc-500 dark:text-zinc-500 uppercase">End Sem Papers</p>
               </div>
               <div className="space-y-2">
                 {endSem.map((paper) => <PaperCard key={paper.id} paper={paper} onAction={onAction} />)}
@@ -490,7 +518,7 @@ function SubjectAccordion({ subject, papers, onAction }) {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-1 h-1 rounded-full bg-purple-500" />
-                <p className="text-xs font-mono tracking-wider text-zinc-500 uppercase">Mid Sem Papers</p>
+                <p className="text-xs font-mono tracking-wider text-zinc-500 dark:text-zinc-500 uppercase">Mid Sem Papers</p>
               </div>
               <div className="space-y-2">
                 {midSem.map((paper) => <PaperCard key={paper.id} paper={paper} onAction={onAction} />)}
@@ -513,9 +541,9 @@ function Results({ papers, onAction }) {
 
   if (papers.length === 0) {
     return (
-      <div className="py-16 text-center border border-dashed border-zinc-800 rounded-3xl">
+      <div className="py-16 text-center border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl">
         <div className="text-4xl mb-3">📂</div>
-        <h3 className="text-lg font-bold text-white">No Papers Found</h3>
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-white">No Papers Found</h3>
         <p className="text-zinc-500 text-sm mt-1.5 max-w-xs mx-auto">No exam files are registered under this term yet.</p>
       </div>
     );
@@ -537,9 +565,9 @@ function Results({ papers, onAction }) {
 function SearchResults({ results, onAction, onGoToSem }) {
   if (results.length === 0) {
     return (
-      <div className="py-20 text-center border border-dashed border-zinc-800 rounded-3xl bg-zinc-900/10">
+      <div className="py-20 text-center border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl bg-zinc-50 dark:bg-zinc-900/10">
         <div className="text-4xl mb-3">🔍</div>
-        <h3 className="text-lg font-bold text-white">No Matching Papers</h3>
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-white">No Matching Papers</h3>
         <p className="text-zinc-500 text-sm mt-1.5">Try searching for other terms like "Data", "Maths", "Operating".</p>
       </div>
     );
@@ -547,8 +575,8 @@ function SearchResults({ results, onAction, onGoToSem }) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between pb-2 border-b border-zinc-900">
-        <h2 className="text-sm font-mono text-zinc-400 uppercase tracking-widest">Search Results ({results.length})</h2>
+      <div className="flex items-center justify-between pb-2 border-b border-zinc-200 dark:border-zinc-900">
+        <h2 className="text-sm font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">Search Results ({results.length})</h2>
       </div>
       <div className="grid grid-cols-1 gap-4">
         {results.map((paper) => {
@@ -561,35 +589,35 @@ function SearchResults({ results, onAction, onGoToSem }) {
             >
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono uppercase">
+                  <span className="text-xs px-2 py-0.5 rounded bg-zinc-150 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-650 dark:text-zinc-400 font-mono uppercase">
                     {course?.label} {branch && branch.label !== "General" ? `· ${branch.label}` : ""}
                   </span>
-                  <span className="text-xs px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-indigo-400 font-mono">
+                  <span className="text-xs px-2 py-0.5 rounded bg-zinc-150 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-indigo-655 dark:text-indigo-400 font-mono">
                     Sem {paper.sem}
                   </span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 font-semibold text-[10px]">
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-650 dark:text-purple-400 font-semibold text-[10px]">
                     {paper.exam}
                   </span>
                 </div>
-                <h4 className="text-lg font-bold text-white tracking-tight">{paper.subject}</h4>
+                <h4 className="text-lg font-bold text-zinc-900 dark:text-white tracking-tight">{paper.subject}</h4>
                 <p className="text-xs text-zinc-500 font-mono">Year: {paper.year}</p>
               </div>
               <div className="flex items-center gap-2 w-full md:w-auto">
                 <button
                   onClick={() => onGoToSem(course?.id, paper.branch, paper.sem)}
-                  className="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-xs font-semibold text-zinc-300 transition cursor-pointer"
+                  className="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition cursor-pointer"
                 >
                   Go to Semester
                 </button>
                 <button
                   onClick={() => onAction("Viewing", paper)}
-                  className="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-xs font-semibold text-zinc-300 transition cursor-pointer"
+                  className="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition cursor-pointer"
                 >
                   View
                 </button>
                 <button
                   onClick={() => onAction("Downloading", paper)}
-                  className="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-white hover:bg-zinc-200 text-xs font-bold text-black transition cursor-pointer"
+                  className="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-zinc-900 dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-xs font-bold text-white dark:text-black transition cursor-pointer"
                 >
                   Download
                 </button>
@@ -613,6 +641,21 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [toast, setToast] = useState(null);
 
+  // Theme support
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [theme]);
+
   // ── Handlers ─────────────────────────────────────────────
 
   function reset() {
@@ -633,20 +676,17 @@ export default function App() {
     }
   }
 
-  // "Back" to course grid = reset course + branch + sem
   function goHome() {
     setSelectedCourse(null);
     setSelectedBranch(null);
     setSelectedSem(null);
   }
 
-  // "Back" to branch select = clear branch + sem (keep course)
   function goCourse() {
     setSelectedBranch(null);
     setSelectedSem(null);
   }
 
-  // "Back" to semester select = clear sem only (keep course + branch)
   function goBranch() {
     setSelectedSem(null);
   }
@@ -704,33 +744,33 @@ export default function App() {
   const showBreadcrumb   = !!selectedCourse && !isSearching;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col relative overflow-hidden transition-colors duration-300">
       
       {/* Dynamic Background Spotlight */}
       <div className="absolute top-[-10%] left-[5%] bg-glow-spotlight" />
       <div className="absolute bottom-[20%] right-[-10%] bg-glow-spotlight" />
 
-      <Navbar reset={reset} />
+      <Navbar reset={reset} theme={theme} setTheme={setTheme} />
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 space-y-12 z-10 relative">
 
         {/* Hero Section */}
         <div className="text-center max-w-2xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-indigo-400 text-xs font-semibold animate-pulse">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 dark:border-indigo-500/25 text-indigo-650 dark:text-indigo-400 text-xs font-semibold">
             <span>Unofficial GEU Deemed Archive</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-none">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-none">
             PaperStack
           </h1>
-          <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
+          <p className="text-zinc-650 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">
             Quick, friction-free access to previous year question papers for Graphic Era Deemed University, Dehradun.
           </p>
 
           {/* Global Search Bar */}
           <div className="max-w-md mx-auto pt-2 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/15 to-purple-500/15 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
             <div className="relative flex items-center">
-              <span className="absolute left-4 text-zinc-500">
+              <span className="absolute left-4 text-zinc-400 dark:text-zinc-500">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -740,12 +780,12 @@ export default function App() {
                 placeholder="Search subjects (e.g. Data Structures, Physics)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-12 py-3 bg-zinc-900/50 border border-zinc-800 focus:border-indigo-500/50 focus:outline-none rounded-2xl text-xs sm:text-sm placeholder-zinc-500 text-white transition-all backdrop-blur-xl"
+                className="w-full pl-11 pr-12 py-3 bg-white/75 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 focus:border-indigo-500/40 focus:outline-none rounded-2xl text-xs sm:text-sm placeholder-zinc-400 dark:placeholder-zinc-500 text-zinc-900 dark:text-white transition-all backdrop-blur-xl"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-4 text-zinc-400 hover:text-white text-xs font-semibold cursor-pointer"
+                  className="absolute right-4 text-zinc-500 hover:text-zinc-900 dark:hover:text-white text-xs font-semibold cursor-pointer"
                 >
                   Clear
                 </button>
@@ -801,11 +841,11 @@ export default function App() {
 
       </main>
 
-      <footer className="border-t border-zinc-900 py-10 mt-16 bg-zinc-950 text-center space-y-2 z-10 relative">
-        <p className="text-xs text-zinc-500 font-mono">
+      <footer className="border-t border-zinc-200 dark:border-zinc-900 py-10 mt-16 bg-zinc-100/50 dark:bg-zinc-950/20 text-center space-y-2 z-10 relative">
+        <p className="text-xs text-zinc-500 dark:text-zinc-650 font-mono">
           PaperStack &copy; {new Date().getFullYear()} · Academic Resource Sharing
         </p>
-        <p className="text-[10px] text-zinc-600 max-w-xs sm:max-w-md mx-auto leading-relaxed">
+        <p className="text-[10px] text-zinc-500 dark:text-zinc-600 max-w-xs sm:max-w-md mx-auto leading-relaxed">
           Disclaimer: This is an unofficial student-run platform and is not affiliated with Graphic Era Deemed University.
         </p>
       </footer>
@@ -817,13 +857,13 @@ export default function App() {
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 bg-zinc-900/90 border border-zinc-800 rounded-2xl shadow-2xl backdrop-blur-xl ring-1 ring-white/5"
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/5"
           >
             <div className="flex h-2.5 w-2.5 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </div>
-            <p className="text-xs font-semibold text-white tracking-wide">{toast.message}</p>
+            <p className="text-xs font-semibold text-zinc-800 dark:text-white tracking-wide">{toast.message}</p>
           </motion.div>
         )}
       </AnimatePresence>

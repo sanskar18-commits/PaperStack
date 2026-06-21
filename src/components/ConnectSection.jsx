@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const CONFIG = {
   makerMessage: "Hey there! I'm Sanskar Rautela, a BCA (2025-28) student at Graphic Era Deemed University, Dehradun. I built PaperStack because academic papers shouldn't be hard to find, organize, or share. This is an unofficial, open-source, student-driven space where we can access resources without the usual friction. Let's make exam prep a little less painful!",
   googleFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfH2304TVnsZrg4dw80OH7XaBeVjOXp_VxCWX31Fw6p5Eq6AA/viewform?usp=publish-editor", // Paper Submission Google Form
-  feedbackFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfH2304TVnsZrg4dw80OH7XaBeVjOXp_VxCWX31Fw6p5Eq6AA/viewform?usp=publish-editor", // Feedback Google Form (user can swap this)
+  feedbackFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfH2304TVnsZrg4dw80OH7XaBeVjOXp_VxCWX31Fw6p5Eq6AA/viewform?usp=publish-editor", // Feedback Google Form
   socials: {
     instagram: "https://www.instagram.com/sansi_cpp?igsh=MWNwZ25oNXV3OXZwdw==",
     linkedin: "https://www.linkedin.com/in/sanskar-rautela-85996336b?utm_source=share_via&utm_content=profile&utm_medium=member_android",
@@ -49,7 +49,7 @@ const GitHubIcon = () => (
 );
 
 const TeaIcon = () => (
-  <svg className="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+  <svg className="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h15a2 2 0 002-2V6a2 2 0 00-2-2H3a2 2 0 00-2 2v5a2 2 0 002 2zM20 6.5h1.5a1.5 1.5 0 011.5 1.5v2a1.5 1.5 0 01-1.5 1.5H20M6 4V2m4 2V2m4 2V2" />
   </svg>
 );
@@ -62,7 +62,7 @@ function SocialLink({ href, label, hoverClass, children }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className={`flex items-center justify-center w-11 h-11 rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:-translate-y-1 transition-all duration-300 ${hoverClass}`}
+      className={`flex items-center justify-center w-11 h-11 rounded-2xl border border-zinc-250 dark:border-zinc-800 bg-white/60 dark:bg-zinc-900/60 text-zinc-500 dark:text-zinc-400 hover:-translate-y-1 transition-all duration-300 ${hoverClass}`}
     >
       {children}
     </a>
@@ -81,7 +81,7 @@ export default function ConnectSection() {
   };
 
   return (
-    <div className="pt-10 border-t border-zinc-900 mt-16">
+    <div className="pt-10 border-t border-zinc-200 dark:border-zinc-900 mt-16">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -98,26 +98,26 @@ export default function ConnectSection() {
           variants={cardVariants}
           whileHover={{ y: -4, transition: { duration: 0.2 } }}
           id="connect"
-          className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/30 p-6 flex flex-col justify-between backdrop-blur-xl transition-colors hover:border-zinc-700 hover:bg-zinc-900/40"
+          className="relative overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white/30 dark:bg-zinc-900/30 p-6 flex flex-col justify-between backdrop-blur-xl transition-all hover:border-zinc-350 dark:hover:border-zinc-700 hover:bg-white/50 dark:hover:bg-zinc-900/40"
         >
           <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 blur-2xl rounded-full" />
 
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-650 dark:text-purple-400">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold tracking-tight text-white">About the Creator</h3>
+              <h3 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">About the Creator</h3>
             </div>
 
-            <p className="text-zinc-400 text-sm leading-relaxed">
+            <p className="text-zinc-650 dark:text-zinc-400 text-sm leading-relaxed">
               {CONFIG.makerMessage}
             </p>
           </div>
 
-          <div className="pt-6 border-t border-zinc-800/50 mt-6 flex items-center justify-start gap-2.5">
+          <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800/50 mt-6 flex items-center justify-start gap-2.5">
             <SocialLink
               href={CONFIG.socials.instagram}
               label="Instagram"
@@ -137,7 +137,7 @@ export default function ConnectSection() {
             <SocialLink
               href={CONFIG.socials.x}
               label="X"
-              hoverClass="hover:bg-white hover:text-black hover:border-transparent"
+              hoverClass="hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-transparent"
             >
               <XIcon />
             </SocialLink>
@@ -153,7 +153,7 @@ export default function ConnectSection() {
             <SocialLink
               href={CONFIG.socials.github}
               label="GitHub"
-              hoverClass="hover:bg-white hover:text-black hover:border-transparent"
+              hoverClass="hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-transparent"
             >
               <GitHubIcon />
             </SocialLink>
@@ -165,42 +165,42 @@ export default function ConnectSection() {
           variants={cardVariants}
           whileHover={{ y: -4, transition: { duration: 0.2 } }}
           id="contribute"
-          className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/30 p-6 flex flex-col justify-between backdrop-blur-xl transition-colors hover:border-zinc-700 hover:bg-zinc-900/40"
+          className="relative overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white/30 dark:bg-zinc-900/30 p-6 flex flex-col justify-between backdrop-blur-xl transition-all hover:border-zinc-350 dark:hover:border-zinc-700 hover:bg-white/50 dark:hover:bg-zinc-900/40"
         >
           <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 blur-2xl rounded-full" />
 
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold tracking-tight text-white">Contribute Papers</h3>
+              <h3 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">Contribute Papers</h3>
             </div>
 
-            <p className="text-zinc-400 text-sm leading-relaxed">
+            <p className="text-zinc-650 dark:text-zinc-400 text-sm leading-relaxed">
               Help your peers by sharing previous year papers! The collection grows through our community's contributions.
             </p>
 
-            <div className="border border-zinc-800/80 bg-zinc-950/40 rounded-2xl p-4 space-y-3">
-              <div className="flex items-start gap-2.5 text-xs text-zinc-300">
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/35 text-[10px] font-bold text-blue-400 font-mono shrink-0">1</span>
+            <div className="border border-zinc-200 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-950/40 rounded-2xl p-4 space-y-3">
+              <div className="flex items-start gap-2.5 text-xs text-zinc-700 dark:text-zinc-300">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/35 text-[10px] font-bold text-blue-600 dark:text-blue-400 font-mono shrink-0">1</span>
                 <span>Click the button below to open the secure Google Form.</span>
               </div>
-              <div className="flex items-start gap-2.5 text-xs text-zinc-300">
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/35 text-[10px] font-bold text-blue-400 font-mono shrink-0">2</span>
+              <div className="flex items-start gap-2.5 text-xs text-zinc-700 dark:text-zinc-300">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/35 text-[10px] font-bold text-blue-600 dark:text-blue-400 font-mono shrink-0">2</span>
                 <span>Upload your PDF file and submit. Easy as that!</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3 mt-6 pt-4 border-t border-zinc-800/50">
+          <div className="space-y-3 mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800/50">
             <a
               href={CONFIG.googleFormUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white text-black font-semibold hover:bg-zinc-200 active:scale-95 transition-all text-xs shadow-lg shadow-white/5"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-250 active:scale-95 transition-all text-xs shadow-lg shadow-black/5 dark:shadow-white/5"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
@@ -213,7 +213,7 @@ export default function ConnectSection() {
                 href={`${CONFIG.socials.repo}/blob/main/CONTRIBUTING.md`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10px] text-zinc-500 hover:text-zinc-300 hover:underline transition font-mono inline-flex items-center gap-1"
+                className="text-[10px] text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline transition font-mono inline-flex items-center gap-1"
               >
                 GitHub user? Send a PR instead →
               </a>
@@ -226,29 +226,29 @@ export default function ConnectSection() {
           variants={cardVariants}
           whileHover={{ y: -4, transition: { duration: 0.2 } }}
           id="feedback"
-          className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/30 p-6 flex flex-col justify-between backdrop-blur-xl transition-colors hover:border-zinc-700 hover:bg-zinc-900/40"
+          className="relative overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white/30 dark:bg-zinc-900/30 p-6 flex flex-col justify-between backdrop-blur-xl transition-all hover:border-zinc-350 dark:hover:border-zinc-700 hover:bg-white/50 dark:hover:bg-zinc-900/40"
         >
           <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 blur-2xl rounded-full" />
 
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-650 dark:text-indigo-400">
                 <TeaIcon />
               </div>
-              <h3 className="text-lg font-semibold tracking-tight text-white">Roast, Toast, or Spill the Tea</h3>
+              <h3 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">Roast, Toast, or Spill the Tea</h3>
             </div>
 
-            <p className="text-zinc-400 text-sm leading-relaxed">
+            <p className="text-zinc-650 dark:text-zinc-400 text-sm leading-relaxed">
               Did we save your CGPA? Did you find a broken link? Or do you just want to rant about that one exam syllabus? We are all ears! Spill the tea (or suggest new features) here. We promise not to tell your HOD. 🤫
             </p>
           </div>
 
-          <div className="space-y-3 mt-6 pt-4 border-t border-zinc-800/50">
+          <div className="space-y-3 mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800/50">
             <a
               href={CONFIG.feedbackFormUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all text-xs font-semibold text-white shadow-lg shadow-indigo-500/10"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-indigo-650 hover:bg-indigo-550 active:scale-95 transition-all text-xs font-semibold text-white shadow-lg shadow-indigo-500/10"
             >
               Spill the Tea ☕
             </a>
@@ -258,7 +258,7 @@ export default function ConnectSection() {
                 href={CONFIG.socials.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10px] text-zinc-500 hover:text-zinc-300 hover:underline transition font-mono inline-flex items-center gap-1.5"
+                className="text-[10px] text-zinc-550 hover:text-zinc-750 dark:hover:text-zinc-300 hover:underline transition font-mono inline-flex items-center gap-1.5"
               >
                 <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.132 9.21l8.2-1.192z" />
@@ -269,6 +269,11 @@ export default function ConnectSection() {
           </div>
         </motion.div>
       </motion.div>
+
+      {/* Dynamic One-Line Note Below Cards */}
+      <div className="text-center mt-8 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
+        Can't find your course? <a href={CONFIG.feedbackFormUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">Spill the tea</a> and let us know what to add next! ☕
+      </div>
     </div>
   );
 }
